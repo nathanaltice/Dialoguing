@@ -2,6 +2,8 @@
 // Created: 5/13/18
 // Ported to Phaser 3: 5/9/20
 // Updated: 5/9/20
+// Dialogging
+// Simple "teletext-style" dialog system that reads from a JSON file
 
 // BE STRIK
 "use strict";
