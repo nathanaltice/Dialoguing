@@ -1,0 +1,59 @@
+[
+	[
+		{
+			"speaker" : "homer",
+			"dialog" : "Tell me, O muse, of that ingenious hero who travelled far and wide after he had sacked the famous town of Troy.",
+			"newSpeaker" : "true"
+		},
+		{
+			"speaker" : "homer",
+			"dialog" : "Many cities did he visit, and many were the nations with whose manners and customs he was acquainted."
+		},
+		{	
+			"speaker" : "homer",
+			"dialog" : "Moreover he suffered much by sea while trying to save his own life and bring his men safely home."
+		},
+		{	
+			"speaker" : "homer",
+			"dialog" : "But do what he might he could not save his men, for they perished through their own sheer folly in eating the cattle of the Sun-god Hyperion."
+		},
+		{	
+			"speaker" : "homer",
+			"dialog" : "So the gods prevented them from ever reaching home."
+		},
+		{	
+			"speaker" : "homer",
+			"dialog" : "Tell me, too, about all these things, O daughter of Jove, from whatsoever source you may know them."
+		}
+	],
+	[
+		{
+			"speaker" : "neptune",
+			"dialog" : "See now, how men lay blame upon us gods for what is after all nothing but their own folly.",
+			"newSpeaker" : "true"
+		},
+		{
+			"speaker" : "neptune",
+			"dialog" : "Look at Aegisthus; he must needs make love to Agamemnon's wife unrighteously and then kill Agamemnon, though he knew it would be the death of him."
+		},
+		{	
+			"speaker" : "minerva",
+			"dialog" : "Father, son of Saturn, King of kings, it served Aegisthus right, and so it would any one else who does as he did; but Aegisthus is neither here nor there.",
+			"newSpeaker" : "true"
+		},
+		{	
+			"speaker" : "minerva",
+			"dialog" : "It is for Ulysses that my heart bleeds, when I think of his sufferings in that lonely sea-girt island, far away, poor man, from all his friends."
+		},
+		{	
+			"speaker" : "jove",
+			"dialog" : "My child, what are you talking about? How can I forget Ulysses than whom there is no more capable man on earth, nor more liberal in his offerings to the immortal gods that live in heaven?",
+			"newSpeaker" : "true"
+		},
+		{	
+			"speaker" : "minerva",
+			"dialog" : "If, then, the gods now mean that Ulysses should get home, we should first send Mercury to the Ogygian island to tell Calypso that we have made up our minds and that he is to return.",
+			"newSpeaker" : "true"
+		}
+	]
+]
