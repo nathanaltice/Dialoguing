@@ -40,64 +40,64 @@ class Talking extends Phaser.Scene {
 
     create() {
         // parse dialog from JSON file
-		this.dialog = this.cache.json.get('dialog');
-		
-		// add dialog box sprite
-		this.dialogbox = this.add.sprite(this.DBOX_X, this.DBOX_Y, 'dialogbox').setOrigin(0);
-		//this.dialogbox.visible = false;
+        this.dialog = this.cache.json.get('dialog');
 
-		// initialize dialog text objects (with no text)
-		this.dialogText = this.add.bitmapText(this.TEXT_X, this.TEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE);
+        // add dialog box sprite
+        this.dialogbox = this.add.sprite(this.DBOX_X, this.DBOX_Y, 'dialogbox').setOrigin(0);
+        //this.dialogbox.visible = false;
+
+        // initialize dialog text objects (with no text)
+        this.dialogText = this.add.bitmapText(this.TEXT_X, this.TEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE);
         this.nextText = this.add.bitmapText(this.NEXT_X, this.NEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE);
-        
+
         // ready the character dialog images offscreen
-		this.homer = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'homer').setOrigin(0, 1);
-		this.minerva = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'minerva').setOrigin(0, 1);
-		this.neptune = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'neptune').setOrigin(0, 1);
-		this.jove = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'jove').setOrigin(0, 1);
+        this.homer = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'homer').setOrigin(0, 1);
+        this.minerva = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'minerva').setOrigin(0, 1);
+        this.neptune = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'neptune').setOrigin(0, 1);
+        this.jove = this.add.sprite(this.OFFSCREEN_X, this.DBOX_Y+8, 'jove').setOrigin(0, 1);
 
         // input
         cursors = this.input.keyboard.createCursorKeys();
 
-		// start dialog
+        // start dialog
         this.typeText();
-        
+
         // debug
-		console.log(this.dialog);
+        console.log(this.dialog);
     }
 
     update() {
         // check for spacebar press
-		if(Phaser.Input.Keyboard.JustDown(cursors.space) && !this.dialogTyping) {
-			// trigger dialog
-			this.typeText();
-		}
+        if(Phaser.Input.Keyboard.JustDown(cursors.space) && !this.dialogTyping) {
+            // trigger dialog
+            this.typeText();
+        }
     }
 
     typeText() {
         // lock input while typing
-		this.dialogTyping = true;
+        this.dialogTyping = true;
 
-		// clear text
-		this.dialogText.text = '';
-		this.nextText.text = '';
+        // clear text
+        this.dialogText.text = '';
+        this.nextText.text = '';
 
-		// make sure there are lines left to read in this convo, otherwise jump to next convo
-		if(this.dialogLine > this.dialog[this.dialogConvo].length - 1) {
-			this.dialogLine = 0;
-			this.dialogConvo++;
+        // make sure there are lines left to read in this convo, otherwise jump to next convo
+        if(this.dialogLine > this.dialog[this.dialogConvo].length - 1) {
+            this.dialogLine = 0;
+            this.dialogConvo++;
         }
         
         // make sure we're not out of conversations
-		if(this.dialogConvo >= this.dialog.length) {
-			console.log('End of Conversations');
-		} else {
-			// set current speaker
-			this.dialogSpeaker = this.dialog[this.dialogConvo][this.dialogLine]['speaker'];
-			// check if there's a new speaker
-			if(this.dialog[this.dialogConvo][this.dialogLine]['newSpeaker']) {
+        if(this.dialogConvo >= this.dialog.length) {
+            console.log('End of Conversations');
+        } else {
+            // set current speaker
+            this.dialogSpeaker = this.dialog[this.dialogConvo][this.dialogLine]['speaker'];
+            // check if there's a new speaker
+            if(this.dialog[this.dialogConvo][this.dialogLine]['newSpeaker']) {
                 // tween out prior speaker
-				if(this.dialogLastSpeaker) {
+                if(this.dialogLastSpeaker) {
                     this.tweens.add({
                         targets: this[this.dialogLastSpeaker],
                         x: this.OFFSCREEN_X,
@@ -112,12 +112,12 @@ class Talking extends Phaser.Scene {
                     duration: this.tweenDuration,
                     ease: 'Linear'
                 });
-			}
+            }
 
-			// build dialog (concatenate speaker + line of text)
-			this.dialogLines = this.dialog[this.dialogConvo][this.dialogLine]['speaker'].toUpperCase() + ': ' + this.dialog[this.dialogConvo][this.dialogLine]['dialog'];
+            // build dialog (concatenate speaker + line of text)
+            this.dialogLines = this.dialog[this.dialogConvo][this.dialogLine]['speaker'].toUpperCase() + ': ' + this.dialog[this.dialogConvo][this.dialogLine]['dialog'];
 
-			// create a timer to iterate through each letter in the dialog text
+            // create a timer to iterate through each letter in the dialog text
             let currentChar = 0; 
             this.textTimer = this.time.addEvent({
                 delay: this.LETTER_TIMER,
@@ -139,15 +139,15 @@ class Talking extends Phaser.Scene {
                 },
                 callbackScope: this
             });
-			
-			// set bounds on dialog
-			this.dialogText.maxWidth = this.TEXT_MAX_WIDTH;
+            
+            // set bounds on dialog
+            this.dialogText.maxWidth = this.TEXT_MAX_WIDTH;
 
-			// increment dialog line
-			this.dialogLine++;
+            // increment dialog line
+            this.dialogLine++;
 
-			// set past speaker
-			this.dialogLastSpeaker = this.dialogSpeaker;
-		}
+            // set past speaker
+            this.dialogLastSpeaker = this.dialogSpeaker;
+        }
     }
 }
