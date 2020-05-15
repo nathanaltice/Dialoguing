@@ -3,9 +3,9 @@ class Talking extends Phaser.Scene {
         super("talkingScene");
 
         // dialog constants
-        this.DBOX_X = 0;			// dialog box x-position
-        this.DBOX_Y = 400;			// dialog box y-position
-        this.DBOX_FONT = 'font';	// dialog box font key
+        this.DBOX_X = 0;			    // dialog box x-position
+        this.DBOX_Y = 400;			    // dialog box y-position
+        this.DBOX_FONT = 'gem_font';	// dialog box font key
 
         this.TEXT_X = 50;			// text w/in dialog box x-position
         this.TEXT_Y = 445;			// text w/in dialog box y-position
@@ -41,10 +41,10 @@ class Talking extends Phaser.Scene {
     create() {
         // parse dialog from JSON file
         this.dialog = this.cache.json.get('dialog');
+        //console.log(this.dialog);
 
         // add dialog box sprite
         this.dialogbox = this.add.sprite(this.DBOX_X, this.DBOX_Y, 'dialogbox').setOrigin(0);
-        //this.dialogbox.visible = false;
 
         // initialize dialog text objects (with no text)
         this.dialogText = this.add.bitmapText(this.TEXT_X, this.TEXT_Y, this.DBOX_FONT, '', this.TEXT_SIZE);
@@ -60,10 +60,7 @@ class Talking extends Phaser.Scene {
         cursors = this.input.keyboard.createCursorKeys();
 
         // start dialog
-        this.typeText();
-
-        // debug
-        console.log(this.dialog);
+        this.typeText();        
     }
 
     update() {
@@ -82,21 +79,45 @@ class Talking extends Phaser.Scene {
         this.dialogText.text = '';
         this.nextText.text = '';
 
+        /* Note: In my conversation data structure: 
+                - each array within the main JSON array is a "conversation"
+                - each object within a "conversation" is a "line"
+                - each "line" can have 3 properties: 
+                    1. a speaker
+                    2. the dialog text
+                    3. a flag indicating if this speaker is new
+        */
+
         // make sure there are lines left to read in this convo, otherwise jump to next convo
         if(this.dialogLine > this.dialog[this.dialogConvo].length - 1) {
             this.dialogLine = 0;
+            // I increment conversations here, but you could create logic to exit the dialog here
             this.dialogConvo++;
         }
         
-        // make sure we're not out of conversations
+        // make sure we haven't run out of conversations...
         if(this.dialogConvo >= this.dialog.length) {
+            // here I'm simply "exiting" the last speaker and removing the dialog box,
+            // but you could build other logic to change game states here
             console.log('End of Conversations');
+            // tween out prior speaker's image
+            if(this.dialogLastSpeaker) {
+                this.tweens.add({
+                    targets: this[this.dialogLastSpeaker],
+                    x: this.OFFSCREEN_X,
+                    duration: this.tweenDuration,
+                    ease: 'Linear'
+                });
+            }
+            // make text box invisible
+            this.dialogbox.visible = false;
+
         } else {
-            // set current speaker
+            // if not, set current speaker
             this.dialogSpeaker = this.dialog[this.dialogConvo][this.dialogLine]['speaker'];
-            // check if there's a new speaker
+            // check if there's a new speaker (for exit/enter animations)
             if(this.dialog[this.dialogConvo][this.dialogLine]['newSpeaker']) {
-                // tween out prior speaker
+                // tween out prior speaker's image
                 if(this.dialogLastSpeaker) {
                     this.tweens.add({
                         targets: this[this.dialogLastSpeaker],
@@ -105,7 +126,7 @@ class Talking extends Phaser.Scene {
                         ease: 'Linear'
                     });
                 }
-                // tween in new speaker
+                // tween in new speaker's image
                 this.tweens.add({
                     targets: this[this.dialogSpeaker],
                     x: this.DBOX_X + 50,
@@ -127,7 +148,8 @@ class Talking extends Phaser.Scene {
                     this.dialogText.text += this.dialogLines[currentChar];
                     // advance character position
                     currentChar++;
-                    // check if timer has exhausted its repeats
+                    // check if timer has exhausted its repeats 
+                    // (necessary since Phaser 3 no longer seems to have an onComplete event)
                     if(this.textTimer.getRepeatCount() == 0) {
                         // show prompt for more text
                         this.nextText = this.add.bitmapText(this.NEXT_X, this.NEXT_Y, this.DBOX_FONT, this.NEXT_TEXT, this.TEXT_SIZE).setOrigin(1);
@@ -137,7 +159,7 @@ class Talking extends Phaser.Scene {
                         this.textTimer.destroy();
                     }
                 },
-                callbackScope: this
+                callbackScope: this // keep Scene context
             });
             
             // set bounds on dialog

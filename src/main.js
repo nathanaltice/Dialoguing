@@ -1,9 +1,9 @@
 // Nathan Altice
 // Created: 5/13/18
 // Ported to Phaser 3: 5/9/20
-// Updated: 5/9/20
+// Updated: 5/15/20
 // Dialogging
-// Simple "teletext-style" dialog system that reads from a JSON file
+// Simple "teletext-style" dialog example that reads from a JSON file
 
 // BE STRIK
 "use strict";
