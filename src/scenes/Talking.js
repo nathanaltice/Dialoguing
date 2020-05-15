@@ -85,7 +85,7 @@ class Talking extends Phaser.Scene {
                 - each "line" can have 3 properties: 
                     1. a speaker
                     2. the dialog text
-                    3. a flag indicating if this speaker is new
+                    3. an (optional) flag indicating if this speaker is new
         */
 
         // make sure there are lines left to read in this convo, otherwise jump to next convo
