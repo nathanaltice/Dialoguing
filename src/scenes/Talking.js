@@ -83,8 +83,8 @@ class Talking extends Phaser.Scene {
                 - each array within the main JSON array is a "conversation"
                 - each object within a "conversation" is a "line"
                 - each "line" can have 3 properties: 
-                    1. a speaker
-                    2. the dialog text
+                    1. a speaker (required)
+                    2. the dialog text (required)
                     3. an (optional) flag indicating if this speaker is new
         */
 
