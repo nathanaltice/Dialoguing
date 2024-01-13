@@ -3,7 +3,7 @@ class Talking extends Phaser.Scene {
         super("talkingScene")
     }
 
-    create() {
+    init() {
         // dialog constants
         this.DBOX_X = 0			        // dialog box x-position
         this.DBOX_Y = 400			    // dialog box y-position
@@ -38,7 +38,9 @@ class Talking extends Phaser.Scene {
 
         this.OFFSCREEN_X = -500        // x,y values to place characters offscreen
         this.OFFSCREEN_Y = 1000
+    }
 
+    create() {
         // parse dialog from JSON file
         this.dialog = this.cache.json.get('dialog')
         //console.log(this.dialog)

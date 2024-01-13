@@ -1,7 +1,7 @@
 // Nathan Altice
 // Created: 5/13/18
 // Ported to Phaser 3: 5/9/20
-// Updated: 5/15/23
+// Updated: 1/13/24
 // Dialogging
 // Visual novel "teletext-style" dialog example that reads from a JSON file
 
