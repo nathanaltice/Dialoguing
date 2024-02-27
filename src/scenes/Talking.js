@@ -30,13 +30,9 @@ class Talking extends Phaser.Scene {
         this.nextText = null			// player prompt text to continue typing
 
         // character variables
-        this.homer = null
-        this.minerva = null
-        this.neptune = null
-        this.jove = null
-        this.tweenDuration = 500
+        this.tweenDuration = 500        // character in/out tween duration
 
-        this.OFFSCREEN_X = -500        // x,y values to place characters offscreen
+        this.OFFSCREEN_X = -500         // x,y coordinates used to place characters offscreen
         this.OFFSCREEN_Y = 1000
     }
 
@@ -140,7 +136,7 @@ class Talking extends Phaser.Scene {
             }
 
             // build dialog (concatenate speaker + colon + line of text)
-            this.dialogLines = 
+            this.combinedDialog = 
                 this.dialog[this.dialogConvo][this.dialogLine]['speaker'].toUpperCase() 
                 + ': ' 
                 + this.dialog[this.dialogConvo][this.dialogLine]['dialog']
@@ -149,10 +145,10 @@ class Talking extends Phaser.Scene {
             let currentChar = 0
             this.textTimer = this.time.addEvent({
                 delay: this.LETTER_TIMER,
-                repeat: this.dialogLines.length - 1,
+                repeat: this.combinedDialog.length - 1,
                 callback: () => { 
                     // concatenate next letter from dialogLines
-                    this.dialogText.text += this.dialogLines[currentChar]
+                    this.dialogText.text += this.combinedDialog[currentChar]
                     // advance character position
                     currentChar++
                     // check if timer has exhausted its repeats 
@@ -167,6 +163,7 @@ class Talking extends Phaser.Scene {
                 callbackScope: this // keep Scene context
             })
             
+            // final cleanup before next iteration
             this.dialogText.maxWidth = this.TEXT_MAX_WIDTH  // set bounds on dialog
             this.dialogLine++                               // increment dialog line
             this.dialogLastSpeaker = this.dialogSpeaker     // set past speaker

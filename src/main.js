@@ -4,6 +4,7 @@
 // Updated: 1/13/24
 // Dialogging
 // Visual novel "teletext-style" dialog example that reads from a JSON file
+// Based on a dialog system implemented by UCSC student Tina Peng
 
 // TO-DO: integrate the end-of-line fix from ourcade: https://blog.ourcade.co/posts/2020/phaser-3-typewriter-text-effect-bitmap/
 
