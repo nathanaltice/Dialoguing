@@ -57,7 +57,7 @@ class Talking extends Phaser.Scene {
         // input
         cursors = this.input.keyboard.createCursorKeys()
 
-        // start dialog
+        // start first dialog conversation
         this.typeText()        
     }
 
@@ -76,7 +76,7 @@ class Talking extends Phaser.Scene {
         this.dialogText.text = ''
         this.nextText.text = ''
 
-        /* Note: In my conversation data structure: 
+        /* JSON dialog structure: 
             - each array within the main JSON array is a "conversation"
             - each object within a "conversation" is a "line"
             - each "line" can have 3 properties: 
@@ -88,14 +88,15 @@ class Talking extends Phaser.Scene {
         // make sure there are lines left to read in this convo, otherwise jump to next convo
         if(this.dialogLine > this.dialog[this.dialogConvo].length - 1) {
             this.dialogLine = 0
-            // I increment conversations here, but you could create logic to exit the dialog here
+            // I increment the conversation count here...
+            // ..but you could create logic to exit if each conversation was self-contained
             this.dialogConvo++
         }
         
         // make sure we haven't run out of conversations...
         if(this.dialogConvo >= this.dialog.length) {
-            // here I'm exiting the conversation to return to the title...
-            // ...but you could add alternate logic
+            // here I'm exiting the final conversation to return to the title...
+            // ...but you could add alternate logic if needed
             console.log('End of Conversations')
             // tween out prior speaker's image
             if(this.dialogLastSpeaker) {
